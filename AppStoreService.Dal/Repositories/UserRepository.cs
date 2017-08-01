@@ -1,28 +1,66 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AppStoreService.Core;
+﻿using AppStoreService.Core;
 using AppStoreService.Core.Entities;
+using MongoDB.Bson;
+using MongoDB.Driver;
+using System.Collections.Generic;
 
 namespace AppStoreService.Dal.Repositories
 {
-    public class UserRepository : ICreate<User>, IUpdate<User>, IDelete<User>
+    using Query = Builders<User>;
+
+    public class UserRepository : ICreate<User>, IRead<User>, IUpdate<User>, IDelete<string>
     {
-        public User Create(User item)
+        private readonly IMongoCollection<User> _collection;
+
+        public UserRepository(IMongoDatabase db)
         {
-            throw new NotImplementedException();
+            _collection = db.GetCollection<User>("users");
         }
 
-        public void Delete(User itemIdent)
+        public User Create(User item)
         {
-            throw new NotImplementedException();
+            return _collection.FindOneAndUpdate(ById(item.Id.ToString()), UpdateItem(item), IsUpsert(true));
+        }
+
+        public void Delete(string itemIdent)
+        {
+            _collection.DeleteOne(ById(itemIdent));
+        }
+
+        public IEnumerable<User> Read()
+        {
+            return _collection.Find(Query.Filter.Empty).ToEnumerable();
         }
 
         public void Update(User item)
         {
-            throw new NotImplementedException();
+            _collection.FindOneAndUpdate(ById(item.Id.ToString()), UpdateItem(item), IsUpsert(true));
+        }
+
+        private FilterDefinition<User> ById(string userId)
+        {
+            return Query.Filter.Eq(u => u.Id, new ObjectId(userId));
+        }
+
+        public UpdateDefinition<User> UpdateItem(User item)
+        {
+            return Query.Update
+                .Set(u => u.Address, item.Address)
+                .Set(u => u.BDay, item.BDay)
+                .Set(u => u.Email, item.Email)
+                .Set(u => u.FirstName, item.FirstName)
+                .Set(u => u.IsConfirm, item.IsConfirm)
+                .Set(u => u.LastName, item.LastName)
+                .Set(u => u.Phone, item.Phone);
+        }
+
+        private FindOneAndUpdateOptions<User> IsUpsert(bool upsert)
+        {
+            return new FindOneAndUpdateOptions<User>
+            {
+                IsUpsert = upsert,
+                ReturnDocument = ReturnDocument.After
+            };
         }
     }
 }
