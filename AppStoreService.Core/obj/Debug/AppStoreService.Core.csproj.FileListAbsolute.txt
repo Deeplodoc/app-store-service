@@ -1,5 +1,0 @@
-D:\Microsoft VS Code\Work\app-store-service\AppStoreService.Core\bin\Debug\AppStoreService.Core.dll
-D:\Microsoft VS Code\Work\app-store-service\AppStoreService.Core\bin\Debug\AppStoreService.Core.pdb
-D:\Microsoft VS Code\Work\app-store-service\AppStoreService.Core\obj\Debug\AppStoreService.Core.csprojResolveAssemblyReference.cache
-D:\Microsoft VS Code\Work\app-store-service\AppStoreService.Core\obj\Debug\AppStoreService.Core.dll
-D:\Microsoft VS Code\Work\app-store-service\AppStoreService.Core\obj\Debug\AppStoreService.Core.pdb

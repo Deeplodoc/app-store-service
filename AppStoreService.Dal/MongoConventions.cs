@@ -1,8 +1,8 @@
-﻿using MongoDB.Bson.Serialization;
+﻿using System.Linq;
+using AppStoreService.Core;
+using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Bson.Serialization.IdGenerators;
-using System.Linq;
-using AppStoreService.Core;
 
 namespace AppStoreService.Dal
 {

@@ -1,14 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using AppStoreService.Core;
+using AppStoreService.Core.Entities;
 
 namespace AppStoreService.Controllers
 {
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {
+        private readonly IRead<User> _userReader;
+
+        public ValuesController(IRead<User> userReader)
+        {
+            _userReader = userReader;
+            IEnumerable<User> users = _userReader.Read();
+        }
+
         // GET api/values
         [HttpGet]
         public IEnumerable<string> Get()

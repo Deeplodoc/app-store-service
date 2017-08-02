@@ -1,8 +1,8 @@
-﻿using AppStoreService.Core;
+﻿using System.Collections.Generic;
+using AppStoreService.Core;
 using AppStoreService.Core.Entities;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using System.Collections.Generic;
 
 namespace AppStoreService.Dal.Repositories
 {
