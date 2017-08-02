@@ -3728,6 +3728,16 @@
           "lib/netstandard1.3/System.Xml.XPath.XDocument.dll": {}
         }
       },
+      "AppStoreService.Business/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v1.6",
+        "dependencies": {
+          "AppStoreService.Core": "1.0.0",
+          "AppStoreService.Dal": "1.0.0",
+          "Autofac": "4.6.1",
+          "NETStandard.Library": "1.6.1"
+        }
+      },
       "AppStoreService.Core/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v1.6",
@@ -9966,6 +9976,11 @@
         "system.xml.xpath.xdocument.nuspec"
       ]
     },
+    "AppStoreService.Business/1.0.0": {
+      "type": "project",
+      "path": "../AppStoreService.Business/AppStoreService.Business.csproj",
+      "msbuildProject": "../AppStoreService.Business/AppStoreService.Business.csproj"
+    },
     "AppStoreService.Core/1.0.0": {
       "type": "project",
       "path": "../AppStoreService.Core/AppStoreService.Core.csproj",
@@ -9979,8 +9994,8 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v1.1": [
+      "AppStoreService.Business >= 1.0.0",
       "AppStoreService.Core >= 1.0.0",
-      "AppStoreService.Dal >= 1.0.0",
       "Autofac >= 4.6.1",
       "Autofac.Extensions.DependencyInjection >= 4.2.0",
       "Microsoft.ApplicationInsights.AspNetCore >= 2.1.1",
@@ -10010,8 +10025,8 @@
             "D:\\Microsoft VS Code\\Work\\app-store-service\\AppStoreService.Core\\AppStoreService.Core.csproj": {
               "projectPath": "D:\\Microsoft VS Code\\Work\\app-store-service\\AppStoreService.Core\\AppStoreService.Core.csproj"
             },
-            "D:\\Microsoft VS Code\\Work\\app-store-service\\AppStoreService.Dal\\AppStoreService.Dal.csproj": {
-              "projectPath": "D:\\Microsoft VS Code\\Work\\app-store-service\\AppStoreService.Dal\\AppStoreService.Dal.csproj"
+            "D:\\Microsoft VS Code\\Work\\app-store-service\\AppStoreService.Business\\AppStoreService.Business.csproj": {
+              "projectPath": "D:\\Microsoft VS Code\\Work\\app-store-service\\AppStoreService.Business\\AppStoreService.Business.csproj"
             }
           }
         }

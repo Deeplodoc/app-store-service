@@ -1,0 +1,11 @@
+D:\Microsoft VS Code\Work\app-store-service\AppStoreService.Business\bin\Debug\netstandard1.6\AppStoreService.Business.deps.json
+D:\Microsoft VS Code\Work\app-store-service\AppStoreService.Business\obj\Debug\netstandard1.6\AppStoreService.Business.csprojResolveAssemblyReference.cache
+D:\Microsoft VS Code\Work\app-store-service\AppStoreService.Business\obj\Debug\netstandard1.6\AppStoreService.Business.AssemblyInfo.cs
+D:\Microsoft VS Code\Work\app-store-service\AppStoreService.Business\bin\Debug\netstandard1.6\AppStoreService.Business.dll
+D:\Microsoft VS Code\Work\app-store-service\AppStoreService.Business\bin\Debug\netstandard1.6\AppStoreService.Business.pdb
+D:\Microsoft VS Code\Work\app-store-service\AppStoreService.Business\obj\Debug\netstandard1.6\AppStoreService.Business.dll
+D:\Microsoft VS Code\Work\app-store-service\AppStoreService.Business\obj\Debug\netstandard1.6\AppStoreService.Business.pdb
+D:\Microsoft VS Code\Work\app-store-service\AppStoreService.Business\bin\Debug\netstandard1.6\AppStoreService.Core.dll
+D:\Microsoft VS Code\Work\app-store-service\AppStoreService.Business\bin\Debug\netstandard1.6\AppStoreService.Core.pdb
+D:\Microsoft VS Code\Work\app-store-service\AppStoreService.Business\bin\Debug\netstandard1.6\AppStoreService.Dal.dll
+D:\Microsoft VS Code\Work\app-store-service\AppStoreService.Business\bin\Debug\netstandard1.6\AppStoreService.Dal.pdb

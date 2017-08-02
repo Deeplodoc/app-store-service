@@ -20,8 +20,8 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.1" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AppStoreService.Business\AppStoreService.Business.csproj" />
     <ProjectReference Include="..\AppStoreService.Core\AppStoreService.Core.csproj" />
-    <ProjectReference Include="..\AppStoreService.Dal\AppStoreService.Dal.csproj" />
   </ItemGroup>
 
 </Project>

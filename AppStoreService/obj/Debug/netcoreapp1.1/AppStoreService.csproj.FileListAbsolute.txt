@@ -11,3 +11,5 @@ D:\Microsoft VS Code\Work\app-store-service\AppStoreService\obj\Debug\netcoreapp
 D:\Microsoft VS Code\Work\app-store-service\AppStoreService\obj\Debug\netcoreapp1.1\AppStoreService.pdb
 D:\Microsoft VS Code\Work\app-store-service\AppStoreService\bin\Debug\netcoreapp1.1\AppStoreService.Dal.dll
 D:\Microsoft VS Code\Work\app-store-service\AppStoreService\bin\Debug\netcoreapp1.1\AppStoreService.Dal.pdb
+D:\Microsoft VS Code\Work\app-store-service\AppStoreService\bin\Debug\netcoreapp1.1\AppStoreService.Business.dll
+D:\Microsoft VS Code\Work\app-store-service\AppStoreService\bin\Debug\netcoreapp1.1\AppStoreService.Business.pdb

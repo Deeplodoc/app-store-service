@@ -1,5 +1,5 @@
-﻿using AppStoreService.Core;
-using AppStoreService.Dal;
+﻿using AppStoreService.Business;
+using AppStoreService.Core;
 using Autofac;
 using Microsoft.Extensions.Options;
 
@@ -10,7 +10,7 @@ namespace AppStoreService
         protected override void Load(ContainerBuilder builder)
         {
             builder.Register(x => x.Resolve<IOptions<Configuration>>().Value);
-            builder.RegisterModule<DalModule>();
+            builder.RegisterModule<BusinessModule>();
         }
     }
 }
