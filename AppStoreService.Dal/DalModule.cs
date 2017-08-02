@@ -1,6 +1,9 @@
 ﻿using AppStoreService.Core;
 using AppStoreService.Core.Entities;
-using AppStoreService.Dal.Repositories;
+using AppStoreService.Dal.Creators;
+using AppStoreService.Dal.Readers;
+using AppStoreService.Dal.Removers;
+using AppStoreService.Dal.Updaters;
 using Autofac;
 using MongoDB.Driver;
 
@@ -23,10 +26,10 @@ namespace AppStoreService.Dal
                         .DatabaseName))
                 .As<IMongoDatabase>().InstancePerLifetimeScope();
 
-            builder.RegisterType<UserRepository>().As<ICreate<User>>();
-            builder.RegisterType<UserRepository>().As<IRead<User>>();
-            builder.RegisterType<UserRepository>().As<IUpdate<User>>();
-            builder.RegisterType<UserRepository>().As<IDelete<string>>();
+            builder.RegisterType<UserCreator>().As<ICreate<User>>();
+            builder.RegisterType<UserReader>().As<IRead<User>>();
+            builder.RegisterType<UserUpdater>().As<IUpdate<User>>();
+            builder.RegisterType<UserRemover>().As<IDelete<string>>();
         }
     }
 }

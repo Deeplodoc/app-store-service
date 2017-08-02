@@ -1,44 +1,20 @@
-﻿using System.Collections.Generic;
-using AppStoreService.Core;
+﻿using AppStoreService.Core;
 using AppStoreService.Core.Entities;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
-namespace AppStoreService.Dal.Repositories
+namespace AppStoreService.Dal.Updaters
 {
     using Query = Builders<User>;
 
-    public class UserRepository : ICreate<User>, IRead<User>, IUpdate<User>, IDelete<string>
+    public class UserUpdater : BaseRepository<User>, IUpdate<User>
     {
-        private readonly IMongoCollection<User> _collection;
-
-        public UserRepository(IMongoDatabase db)
-        {
-            _collection = db.GetCollection<User>("users");
-        }
-
-        public User Create(User item)
-        {
-            item.Id = ObjectId.GenerateNewId();
-            _collection.InsertOne(item);
-            return item;
-        }
-
-        public void Delete(string itemIdent)
-        {
-            if (!string.IsNullOrEmpty(itemIdent) && ObjectId.TryParse(itemIdent, out ObjectId id))
-                _collection.DeleteOne(ById(id));
-        }
-
-        public IEnumerable<User> Read()
-        {
-            return _collection.Find(Query.Filter.Empty).ToEnumerable();
-        }
+        public UserUpdater(IMongoDatabase db) : base(db) { }
 
         public void Update(User item)
         {
             if (item.Id != null && ObjectId.TryParse(item.Id.ToString(), out ObjectId id))
-                _collection.FindOneAndUpdate(ById(id), UpdateItem(item), IsUpsert(false));
+                Collection.FindOneAndUpdate(ById(id), UpdateItem(item), IsUpsert(false));
         }
 
         private FilterDefinition<User> ById(object userId)

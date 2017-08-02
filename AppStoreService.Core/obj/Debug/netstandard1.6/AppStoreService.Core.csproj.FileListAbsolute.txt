@@ -4,3 +4,4 @@ D:\Microsoft VS Code\Work\app-store-service\AppStoreService.Core\bin\Debug\netst
 D:\Microsoft VS Code\Work\app-store-service\AppStoreService.Core\obj\Debug\netstandard1.6\AppStoreService.Core.AssemblyInfo.cs
 D:\Microsoft VS Code\Work\app-store-service\AppStoreService.Core\obj\Debug\netstandard1.6\AppStoreService.Core.dll
 D:\Microsoft VS Code\Work\app-store-service\AppStoreService.Core\obj\Debug\netstandard1.6\AppStoreService.Core.pdb
+D:\Microsoft VS Code\Work\app-store-service\AppStoreService.Core\obj\Debug\netstandard1.6\AppStoreService.Core.csprojResolveAssemblyReference.cache

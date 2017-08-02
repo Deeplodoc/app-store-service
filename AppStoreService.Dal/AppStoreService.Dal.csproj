@@ -13,4 +13,8 @@
     <ProjectReference Include="..\AppStoreService.Core\AppStoreService.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Finders\" />
+  </ItemGroup>
+
 </Project>
