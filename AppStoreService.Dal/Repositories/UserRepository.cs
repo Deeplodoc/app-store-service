@@ -19,12 +19,15 @@ namespace AppStoreService.Dal.Repositories
 
         public User Create(User item)
         {
-            return _collection.FindOneAndUpdate(ById(item.Id.ToString()), UpdateItem(item), IsUpsert(true));
+            item.Id = ObjectId.GenerateNewId();
+            _collection.InsertOne(item);
+            return item;
         }
 
         public void Delete(string itemIdent)
         {
-            _collection.DeleteOne(ById(itemIdent));
+            if (!string.IsNullOrEmpty(itemIdent) && ObjectId.TryParse(itemIdent, out ObjectId id))
+                _collection.DeleteOne(ById(id));
         }
 
         public IEnumerable<User> Read()
@@ -34,12 +37,13 @@ namespace AppStoreService.Dal.Repositories
 
         public void Update(User item)
         {
-            _collection.FindOneAndUpdate(ById(item.Id.ToString()), UpdateItem(item), IsUpsert(true));
+            if (item.Id != null && ObjectId.TryParse(item.Id.ToString(), out ObjectId id))
+                _collection.FindOneAndUpdate(ById(id), UpdateItem(item), IsUpsert(false));
         }
 
-        private FilterDefinition<User> ById(string userId)
+        private FilterDefinition<User> ById(object userId)
         {
-            return Query.Filter.Eq(u => u.Id, new ObjectId(userId));
+            return Query.Filter.Eq(u => u.Id, userId);
         }
 
         public UpdateDefinition<User> UpdateItem(User item)

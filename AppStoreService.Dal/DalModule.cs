@@ -26,7 +26,7 @@ namespace AppStoreService.Dal
             builder.RegisterType<UserRepository>().As<ICreate<User>>();
             builder.RegisterType<UserRepository>().As<IRead<User>>();
             builder.RegisterType<UserRepository>().As<IUpdate<User>>();
-            builder.RegisterType<UserRepository>().As<IDelete<User>>();
+            builder.RegisterType<UserRepository>().As<IDelete<string>>();
         }
     }
 }

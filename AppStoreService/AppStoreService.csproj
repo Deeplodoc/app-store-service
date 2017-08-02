@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Controllers\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
   <ItemGroup>
@@ -20,6 +21,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AppStoreService.Core\AppStoreService.Core.csproj" />
+    <ProjectReference Include="..\AppStoreService.Dal\AppStoreService.Dal.csproj" />
   </ItemGroup>
 
 </Project>

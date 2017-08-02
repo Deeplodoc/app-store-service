@@ -10,6 +10,7 @@ using System;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using Newtonsoft.Json.Serialization;
+using Microsoft.Extensions.Options;
 
 namespace AppStoreService
 {
@@ -35,7 +36,8 @@ namespace AppStoreService
 
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddMvc()
+                .AddJsonOptions(opt => opt.SerializerSettings.Converters = new List<JsonConverter> { new ObjectIdJsonConverter() });
             services.AddOptions();
             services.Configure<Configuration>(options => Configuration.GetSection("AppSettings").Bind(options));
 
@@ -46,13 +48,19 @@ namespace AppStoreService
             return new AutofacServiceProvider(Container);
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IApplicationLifetime appLifitime)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            app.UseMvc();
-            appLifitime.ApplicationStopped.Register(() => Container.Dispose());
+            var options = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
+            app.UseRequestLocalization(options.Value);
+
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(name: "areaRoute",
+                    template: "{area:exists}/{controller=Home}/{action=Index}");
+            });
         }
     }
 }

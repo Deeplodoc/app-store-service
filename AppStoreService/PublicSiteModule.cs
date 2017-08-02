@@ -1,10 +1,7 @@
 ﻿using AppStoreService.Core;
+using AppStoreService.Dal;
 using Autofac;
 using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace AppStoreService
 {
@@ -13,6 +10,7 @@ namespace AppStoreService
         protected override void Load(ContainerBuilder builder)
         {
             builder.Register(x => x.Resolve<IOptions<Configuration>>().Value);
+            builder.RegisterModule<DalModule>();
         }
     }
 }
