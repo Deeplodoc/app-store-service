@@ -27,11 +27,11 @@ namespace AppStoreService.Controllers
             _accountService = accountService;
         }
 
-        [HttpPost("login")]
+        [HttpGet("login")]
         [AllowAnonymous]
-        public async Task Login(User model)
+        public async Task Login(string login, string password)
         {
-            var identity = GetIdentity(model.Login, model.Password);
+            var identity = GetIdentity(login, login);
             if (identity == null)
             {
                 Response.StatusCode = 400;
@@ -129,6 +129,13 @@ namespace AppStoreService.Controllers
         public async Task EditUser(User model)
         {
             await _accountService.UpdateUser(model);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("getUserByForgotCode")]
+        public async Task<User> GetUserByForgotCode(string code)
+        {
+            return await _accountService.GetForgotUser(code);
         }
 
         private ClaimsIdentity GetIdentity(string username, string password)

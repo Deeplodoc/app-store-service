@@ -14,6 +14,7 @@ namespace AppStoreService.Business.Services
         private readonly IFilter<UserLoginFindModel, User> _userLoginFilter;
         private readonly IFilter<UserConfirmModel, User> _userConfirmFilter;
         private readonly IFilter<UserMailModel, User> _userMailFinder;
+        private readonly IFilter<UserResetCodeModel, User> _userResetCodeFinder;
         private readonly IEmailSendService _emailService;
         private readonly Configuration _config;
 
@@ -22,6 +23,7 @@ namespace AppStoreService.Business.Services
             IFilter<UserConfirmModel, User> userConfirmFilter,
             IUpdate<User> userUpdater,
             IFilter<UserMailModel, User> userMailFinder,
+            IFilter<UserResetCodeModel, User> userResetCodeFinder,
             Configuration config)
         {
             _userCreator = userCreator;
@@ -30,6 +32,7 @@ namespace AppStoreService.Business.Services
             _emailService = emailService;
             _userConfirmFilter = userConfirmFilter;
             _userMailFinder = userMailFinder;
+            _userResetCodeFinder = userResetCodeFinder;
             _config = config;
         }
 
@@ -122,6 +125,14 @@ namespace AppStoreService.Business.Services
             return await Task.Run(() =>
             {
                 return isForgot;
+            });
+        }
+
+        public async Task<User> GetForgotUser(string code)
+        {
+            return await _userResetCodeFinder.FilterAsync(new UserResetCodeModel
+            {
+                Code = code
             });
         }
 

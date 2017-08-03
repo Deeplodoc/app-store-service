@@ -12,5 +12,6 @@ namespace AppStoreService.Core.Business
         Task<bool> ChangePassword(string email, string password);
         Task<bool> ForgotPassword(string mail);
         Task UpdateUser(User item);
+        Task<User> GetForgotUser(string code);
     }
 }
