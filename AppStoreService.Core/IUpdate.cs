@@ -1,4 +1,6 @@
-﻿namespace AppStoreService.Core
+﻿using System.Threading.Tasks;
+
+namespace AppStoreService.Core
 {
     /// <summary>
     /// Update item.
@@ -7,5 +9,6 @@
     public interface IUpdate<in T>
     {
         void Update(T item);
+        Task UpdateAsync(T item);
     }
 }

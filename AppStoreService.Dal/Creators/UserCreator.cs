@@ -2,6 +2,7 @@
 using AppStoreService.Core.Entities;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using System;
 using System.Threading.Tasks;
 
 namespace AppStoreService.Dal.Creators
@@ -14,6 +15,7 @@ namespace AppStoreService.Dal.Creators
         {
             item.Id = ObjectId.GenerateNewId();
             Collection.InsertOne(item);
+            item.ConfirmCode = Guid.NewGuid();
             return item;
         }
 
@@ -21,6 +23,7 @@ namespace AppStoreService.Dal.Creators
         {
             item.Id = ObjectId.GenerateNewId();
             await Collection.InsertOneAsync(item);
+            item.ConfirmCode = Guid.NewGuid();
             return item;
         }
     }

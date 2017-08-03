@@ -2,6 +2,7 @@
 using AppStoreService.Core.Entities;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using System.Threading.Tasks;
 
 namespace AppStoreService.Dal.Updaters
 {
@@ -41,6 +42,12 @@ namespace AppStoreService.Dal.Updaters
                 IsUpsert = upsert,
                 ReturnDocument = ReturnDocument.After
             };
+        }
+
+        public async Task UpdateAsync(User item)
+        {
+            if (item.Id != null && ObjectId.TryParse(item.Id.ToString(), out ObjectId id))
+                await Collection.FindOneAndUpdateAsync(ById(id), UpdateItem(item), IsUpsert(false));
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using AppStoreService.Core;
 using AppStoreService.Core.Entities;
+using AppStoreService.Core.FindersModels;
 using AppStoreService.Dal.Creators;
+using AppStoreService.Dal.Finders;
 using AppStoreService.Dal.Readers;
 using AppStoreService.Dal.Removers;
 using AppStoreService.Dal.Senders;
@@ -35,6 +37,9 @@ namespace AppStoreService.Dal
             builder.RegisterType<EmailCreator>().As<ICreate<Email>>();
 
             builder.RegisterType<YandexEmailSender>().As<ISend<Email>>();
+
+            builder.RegisterType<UserLoginFinder>().As<IFilter<UserLoginFindModel, User>>();
+            builder.RegisterType<UserConfirmFinder>().As<IFilter<UserConfirmModel, User>>();
         }
     }
 }

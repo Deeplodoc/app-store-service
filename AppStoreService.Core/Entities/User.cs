@@ -12,5 +12,8 @@ namespace AppStoreService.Core.Entities
         public DateTime BDay { get; set; }
         public string Email { get; set; }
         public bool IsConfirm { get; set; }
+        public string Login { get; set; }
+        public string Password { get; set; }
+        public Guid ConfirmCode { get; set; }
     }
 }
