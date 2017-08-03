@@ -11,6 +11,7 @@ namespace AppStoreService.Business
         {
             builder.RegisterModule<DalModule>();
             builder.RegisterType<UserService>().As<IUserService>();
+            builder.RegisterType<EmailSendService>().As<IEmailSendService>();
         }
     }
 }

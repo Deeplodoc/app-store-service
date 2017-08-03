@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 
 namespace AppStoreService.Dal.Creators
 {
-    public class UserCreator : BaseRepository<User>, ICreate<User>
+    public class EmailCreator : BaseRepository<Email>, ICreate<Email>
     {
-        public UserCreator(IMongoDatabase db) : base(db) { }
+        public EmailCreator(IMongoDatabase db) : base(db) { }
 
-        public User Create(User item)
+        public Email Create(Email item)
         {
             item.Id = ObjectId.GenerateNewId();
             Collection.InsertOne(item);
             return item;
         }
 
-        public async Task<User> CreateAsync(User item)
+        public async Task<Email> CreateAsync(Email item)
         {
             item.Id = ObjectId.GenerateNewId();
             await Collection.InsertOneAsync(item);

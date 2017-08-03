@@ -30,6 +30,8 @@ namespace AppStoreService.Dal
             builder.RegisterType<UserReader>().As<IRead<User>>();
             builder.RegisterType<UserUpdater>().As<IUpdate<User>>();
             builder.RegisterType<UserRemover>().As<IDelete<string>>();
+
+            builder.RegisterType<EmailCreator>().As<ICreate<Email>>();
         }
     }
 }

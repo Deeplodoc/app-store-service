@@ -1,4 +1,6 @@
-﻿namespace AppStoreService.Core
+﻿using System.Threading.Tasks;
+
+namespace AppStoreService.Core
 {
     /// <summary>
     /// Create item.
@@ -7,5 +9,6 @@
     public interface ICreate<T>
     {
         T Create(T item);
+        Task<T> CreateAsync(T item);
     }
 }
