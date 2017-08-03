@@ -9,5 +9,8 @@ namespace AppStoreService.Core.Business
         Task<bool> ConfirmAccount(string userId, string code);
         Task<User> CreateUserAsync(User item);
         Task SendMailAsync(Email item);
+        Task<bool> ChangePassword(string email, string password);
+        Task<bool> ForgotPassword(string mail);
+        Task UpdateUser(User item);
     }
 }

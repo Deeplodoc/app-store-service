@@ -3,6 +3,7 @@ using AppStoreService.Core.Business;
 using AppStoreService.Core.Entities;
 using AppStoreService.Core.FindersModels;
 using System.Threading.Tasks;
+using System;
 
 namespace AppStoreService.Business.Services
 {
@@ -12,18 +13,46 @@ namespace AppStoreService.Business.Services
         private readonly IUpdate<User> _userUpdater;
         private readonly IFilter<UserLoginFindModel, User> _userLoginFilter;
         private readonly IFilter<UserConfirmModel, User> _userConfirmFilter;
+        private readonly IFilter<UserMailModel, User> _userMailFinder;
         private readonly IEmailSendService _emailService;
+        private readonly Configuration _config;
 
         public AccountService(IFilter<UserLoginFindModel, User> userLoginFilter,
             ICreate<User> userCreator, IEmailSendService emailService,
             IFilter<UserConfirmModel, User> userConfirmFilter,
-            IUpdate<User> userUpdater)
+            IUpdate<User> userUpdater,
+            IFilter<UserMailModel, User> userMailFinder,
+            Configuration config)
         {
             _userCreator = userCreator;
             _userUpdater = userUpdater;
             _userLoginFilter = userLoginFilter;
             _emailService = emailService;
             _userConfirmFilter = userConfirmFilter;
+            _userMailFinder = userMailFinder;
+            _config = config;
+        }
+
+        public async Task<bool> ChangePassword(string email, string password)
+        {
+            bool isChange = false;
+
+            User user = await _userMailFinder.FilterAsync(new UserMailModel
+            {
+                Email = email
+            });
+
+            if (user != null && user.IsConfirm)
+            {
+                user.Password = password;
+                await _userUpdater.UpdateAsync(user);
+                isChange = true;
+            }
+
+            return await Task.Run(() =>
+            {
+                return isChange;
+            });
         }
 
         public async Task<bool> ConfirmAccount(string userId, string code)
@@ -49,9 +78,51 @@ namespace AppStoreService.Business.Services
             });
         }
 
-        public Task<User> CreateUserAsync(User item)
+        public async Task<User> CreateUserAsync(User item)
         {
-            return _userCreator.CreateAsync(item);
+            User user = await _userMailFinder.FilterAsync(new UserMailModel
+            {
+                Email = item.Email
+            });
+
+            if (user == null)
+                return await _userCreator.CreateAsync(item);
+
+            return null;
+        }
+
+        public async Task<bool> ForgotPassword(string email)
+        {
+            bool isForgot = false;
+            User user = await _userMailFinder.FilterAsync(new UserMailModel
+            {
+                Email = email
+            });
+
+            if (user != null && user.IsConfirm)
+            {
+                user.ResetPasswordCode = Guid.NewGuid();
+                await _userUpdater.UpdateAsync(user);
+
+                string url = $"{_config.ForgotPasswordUrl}/?code={user.ResetPasswordCode}";
+                string body = $"Чтобы сбросить пароль, перейдите по ссылке по ссылке: <a href='{url}'>link</a>";
+                Email mail = new Email
+                {
+                    AddressFrom = _config.EmailFrom,
+                    AddressTo = user.Email,
+                    Title = "Сброс пароля.",
+                    Subject = "",
+                    Body = body
+                };
+                await SendMailAsync(mail);
+
+                isForgot = true;
+            }
+
+            return await Task.Run(() =>
+            {
+                return isForgot;
+            });
         }
 
         public User GetUser(string login, string password)
@@ -66,6 +137,11 @@ namespace AppStoreService.Business.Services
         public async Task SendMailAsync(Email item)
         {
             await _emailService.SendAsync(item);
+        }
+
+        public async Task UpdateUser(User item)
+        {
+            await _userUpdater.UpdateAsync(item);
         }
     }
 }

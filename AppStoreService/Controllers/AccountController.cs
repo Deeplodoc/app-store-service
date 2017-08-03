@@ -1,6 +1,7 @@
 ﻿using AppStoreService.Core;
 using AppStoreService.Core.Business;
 using AppStoreService.Core.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -19,7 +20,7 @@ namespace AppStoreService.Controllers
         private readonly Configuration _config;
         private readonly IAccountService _accountService;
 
-        public AccountController(Configuration config, 
+        public AccountController(Configuration config,
             IAccountService accountService)
         {
             _config = config;
@@ -27,6 +28,7 @@ namespace AppStoreService.Controllers
         }
 
         [HttpPost("login")]
+        [AllowAnonymous]
         public async Task Login(User model)
         {
             var identity = GetIdentity(model.Login, model.Password);
@@ -58,26 +60,75 @@ namespace AppStoreService.Controllers
         }
 
         [HttpPost("register")]
+        [AllowAnonymous]
         public async Task Register(User model)
         {
             User user = await _accountService.CreateUserAsync(model);
-            string url = $"{_config.EmailConfirmUrl}/?userId={user.Id}&code={user.ConfirmCode}";
-            string body = $"Подтвердите регистрацию, перейдя по ссылке: <a href='{url}'>link</a>";
-            Email email = new Email
+
+            if (user != null)
             {
-                AddressFrom = _config.EmailFrom,
-                AddressTo = model.Email,
-                Title = "Подтверждение почты.",
-                Subject = "",
-                Body = body
-            };
-            await _accountService.SendMailAsync(email);
+                string url = $"{_config.EmailConfirmUrl}/?userId={user.Id}&code={user.ConfirmCode}";
+                string body = $"Подтвердите регистрацию, перейдя по ссылке: <a href='{url}'>link</a>";
+                Email email = new Email
+                {
+                    AddressFrom = _config.EmailFrom,
+                    AddressTo = model.Email,
+                    Title = "Подтверждение почты.",
+                    Subject = "",
+                    Body = body
+                };
+                await _accountService.SendMailAsync(email);
+            }
+
+            Response.StatusCode = 400;
+            await Response.WriteAsync("Пользоатель с таким логином или почтой уже существует.");
+            return;
         }
 
         [HttpGet("confirm")]
-        public async Task<bool> Confirm(string userId, string code)
+        public async Task Confirm(string userId, string code)
         {
-            return await _accountService.ConfirmAccount(userId, code);
+            bool result = await _accountService.ConfirmAccount(userId, code);
+            if (!result)
+            {
+                Response.StatusCode = 400;
+                await Response.WriteAsync("Не удалось подтвердить почту.");
+                return;
+            }
+        }
+
+        [AllowAnonymous]
+        [HttpGet("forgotPassword")]
+        public async Task ForgotPassword(string email)
+        {
+            bool result = await _accountService.ForgotPassword(email);
+
+            if (!result)
+            {
+                Response.StatusCode = 400;
+                await Response.WriteAsync("Пользоатель не найден.");
+                return;
+            }
+        }
+
+        [AllowAnonymous]
+        [HttpGet("resetPassword")]
+        public async Task ResetPassword(string email, string newPassword)
+        {
+            bool result = await _accountService.ChangePassword(email, newPassword);
+            if (!result)
+            {
+                Response.StatusCode = 400;
+                await Response.WriteAsync("Пользоатель не найден или email был не подтверждён.");
+                return;
+            }
+        }
+
+        [Authorize]
+        [HttpPost("editUser")]
+        public async Task EditUser(User model)
+        {
+            await _accountService.UpdateUser(model);
         }
 
         private ClaimsIdentity GetIdentity(string username, string password)

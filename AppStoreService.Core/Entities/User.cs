@@ -15,5 +15,6 @@ namespace AppStoreService.Core.Entities
         public string Login { get; set; }
         public string Password { get; set; }
         public Guid ConfirmCode { get; set; }
+        public Guid ResetPasswordCode { get; set; }
     }
 }
