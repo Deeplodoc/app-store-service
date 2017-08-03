@@ -3,6 +3,7 @@ using AppStoreService.Core.Entities;
 using AppStoreService.Dal.Creators;
 using AppStoreService.Dal.Readers;
 using AppStoreService.Dal.Removers;
+using AppStoreService.Dal.Senders;
 using AppStoreService.Dal.Updaters;
 using Autofac;
 using MongoDB.Driver;
@@ -32,6 +33,8 @@ namespace AppStoreService.Dal
             builder.RegisterType<UserRemover>().As<IDelete<string>>();
 
             builder.RegisterType<EmailCreator>().As<ICreate<Email>>();
+
+            builder.RegisterType<YandexEmailSender>().As<ISend<Email>>();
         }
     }
 }

@@ -8,7 +8,7 @@ namespace AppStoreService.Dal.Creators
 {
     public class EmailCreator : BaseRepository<Email>, ICreate<Email>
     {
-        public EmailCreator(IMongoDatabase db) : base(db) { }
+        public EmailCreator(IMongoDatabase db) : base(db, "mails") { }
 
         public Email Create(Email item)
         {

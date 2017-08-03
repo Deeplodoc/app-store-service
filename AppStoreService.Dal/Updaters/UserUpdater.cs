@@ -9,7 +9,7 @@ namespace AppStoreService.Dal.Updaters
 
     public class UserUpdater : BaseRepository<User>, IUpdate<User>
     {
-        public UserUpdater(IMongoDatabase db) : base(db) { }
+        public UserUpdater(IMongoDatabase db) : base(db, "users") { }
 
         public void Update(User item)
         {

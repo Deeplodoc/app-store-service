@@ -9,7 +9,7 @@ namespace AppStoreService.Dal.Removers
 
     public class UserRemover : BaseRepository<User>, IDelete<string>
     {
-        public UserRemover(IMongoDatabase db) : base(db) { }
+        public UserRemover(IMongoDatabase db) : base(db, "users") { }
 
         public void Delete(string itemIdent)
         {

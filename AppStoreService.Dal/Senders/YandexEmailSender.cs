@@ -8,7 +8,7 @@ namespace AppStoreService.Dal.Senders
 {
     public class YandexEmailSender : ISend<Email>
     {
-        public async Task SendSendAsync(Email item)
+        public async Task SendAsync(Email item)
         {
             MimeMessage emailMessage = new MimeMessage();
             emailMessage.From.Add(new MailboxAddress("Интернет магазин", item.AddressFrom));

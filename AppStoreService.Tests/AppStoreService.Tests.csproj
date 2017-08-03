@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.6</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NUnit" Version="3.7.1" />
+    <PackageReference Include="NUnit.Runners" Version="3.7.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AppStoreService.Core\AppStoreService.Core.csproj" />
+    <ProjectReference Include="..\AppStoreService.Dal\AppStoreService.Dal.csproj" />
+  </ItemGroup>
+
+</Project>

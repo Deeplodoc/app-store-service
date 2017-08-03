@@ -6,9 +6,9 @@ namespace AppStoreService.Dal
     {
         private readonly IMongoCollection<T> _collection;
 
-        public BaseRepository(IMongoDatabase db)
+        public BaseRepository(IMongoDatabase db, string collectionName)
         {
-            _collection = db.GetCollection<T>("users");
+            _collection = db.GetCollection<T>(collectionName);
         }
 
         public virtual IMongoCollection<T> Collection

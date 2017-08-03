@@ -9,7 +9,7 @@ namespace AppStoreService.Dal.Readers
 
     public class UserReader : BaseRepository<User>, IRead<User>
     {
-        public UserReader(IMongoDatabase db) : base(db) { }
+        public UserReader(IMongoDatabase db) : base(db, "users") { }
 
         public IEnumerable<User> Read()
         {

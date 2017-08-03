@@ -8,7 +8,7 @@ namespace AppStoreService.Dal.Creators
 {
     public class UserCreator : BaseRepository<User>, ICreate<User>
     {
-        public UserCreator(IMongoDatabase db) : base(db) { }
+        public UserCreator(IMongoDatabase db) : base(db, "users") { }
 
         public User Create(User item)
         {
