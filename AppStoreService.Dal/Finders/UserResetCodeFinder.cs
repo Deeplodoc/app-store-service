@@ -18,7 +18,7 @@ namespace AppStoreService.Dal.Finders
             Guid? code = GetGuidCode(model.Code);
             if (code.HasValue)
             {
-                return Collection.Find(ByResetCode(code.Value)).SingleOrDefault();
+                return Collection.Find(ByResetCode(code.Value.ToString())).SingleOrDefault();
             }
 
             return null;
@@ -29,13 +29,13 @@ namespace AppStoreService.Dal.Finders
             Guid? code = GetGuidCode(model.Code);
             if (code.HasValue)
             {
-                return await Collection.Find(ByResetCode(code.Value)).SingleOrDefaultAsync();
+                return await Collection.Find(ByResetCode(code.Value.ToString())).SingleOrDefaultAsync();
             }
 
             return null;
         }
 
-        private FilterDefinition<User> ByResetCode(Guid code)
+        private FilterDefinition<User> ByResetCode(string code)
         {
             return Query.Filter.Eq(u => u.ResetPasswordCode, code);
         }

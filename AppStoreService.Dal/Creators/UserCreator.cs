@@ -15,7 +15,7 @@ namespace AppStoreService.Dal.Creators
         {
             item.Id = ObjectId.GenerateNewId();
             Collection.InsertOne(item);
-            item.ConfirmCode = Guid.NewGuid();
+            item.ConfirmCode = Guid.NewGuid().ToString();
             return item;
         }
 
@@ -23,7 +23,7 @@ namespace AppStoreService.Dal.Creators
         {
             item.Id = ObjectId.GenerateNewId();
             await Collection.InsertOneAsync(item);
-            item.ConfirmCode = Guid.NewGuid();
+            item.ConfirmCode = Guid.NewGuid().ToString();
             return item;
         }
     }

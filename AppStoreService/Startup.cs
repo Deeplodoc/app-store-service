@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json.Serialization;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 
 namespace AppStoreService
 {
@@ -39,6 +40,18 @@ namespace AppStoreService
         {
             services.AddMvc()
                 .AddJsonOptions(opt => opt.SerializerSettings.Converters = new List<JsonConverter> { new ObjectIdJsonConverter() });
+
+            var corsBuilder = new CorsPolicyBuilder();
+            corsBuilder.AllowAnyHeader();
+            corsBuilder.AllowAnyMethod();
+            corsBuilder.AllowAnyOrigin();
+            corsBuilder.AllowCredentials();
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll", corsBuilder.Build());
+            });
+
             services.AddOptions();
             services.Configure<Configuration>(options => Configuration.GetSection("AppSettings").Bind(options));
 
@@ -51,6 +64,8 @@ namespace AppStoreService
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            app.UseCors("AllowAll");
+
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
@@ -73,10 +88,10 @@ namespace AppStoreService
             });
 
             app.UseMvc(routes =>
-            {
-                routes.MapRoute(name: "areaRoute",
-                    template: "{area:exists}/{controller=Home}/{action=Index}");
-            });
+                {
+                    routes.MapRoute(name: "areaRoute",
+                        template: "{area:exists}/{controller=Home}/{action=Index}");
+                });
         }
     }
 }

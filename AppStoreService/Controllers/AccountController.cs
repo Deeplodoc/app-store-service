@@ -2,6 +2,7 @@
 using AppStoreService.Core.Business;
 using AppStoreService.Core.Entities;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -14,6 +15,7 @@ using System.Threading.Tasks;
 
 namespace AppStoreService.Controllers
 {
+    [EnableCors("AllowAll")]
     [Route("account")]
     public class AccountController : Controller
     {
@@ -36,7 +38,6 @@ namespace AppStoreService.Controllers
             {
                 Response.StatusCode = 400;
                 await Response.WriteAsync("Invalid username or password.");
-                return;
             }
 
             var now = DateTime.UtcNow;
@@ -61,7 +62,7 @@ namespace AppStoreService.Controllers
 
         [HttpPost("register")]
         [AllowAnonymous]
-        public async Task Register(User model)
+        public async Task Register([FromBody]User model)
         {
             User user = await _accountService.CreateUserAsync(model);
 
@@ -80,9 +81,11 @@ namespace AppStoreService.Controllers
                 await _accountService.SendMailAsync(email);
             }
 
-            Response.StatusCode = 400;
-            await Response.WriteAsync("Пользоатель с таким логином или почтой уже существует.");
-            return;
+            else
+            {
+                Response.StatusCode = 400;
+                await Response.WriteAsync("Пользоатель с таким логином или почтой уже существует.");
+            }
         }
 
         [HttpGet("confirm")]
@@ -93,7 +96,6 @@ namespace AppStoreService.Controllers
             {
                 Response.StatusCode = 400;
                 await Response.WriteAsync("Не удалось подтвердить почту.");
-                return;
             }
         }
 
@@ -107,7 +109,6 @@ namespace AppStoreService.Controllers
             {
                 Response.StatusCode = 400;
                 await Response.WriteAsync("Пользоатель не найден.");
-                return;
             }
         }
 
@@ -120,7 +121,6 @@ namespace AppStoreService.Controllers
             {
                 Response.StatusCode = 400;
                 await Response.WriteAsync("Пользоатель не найден или email был не подтверждён.");
-                return;
             }
         }
 

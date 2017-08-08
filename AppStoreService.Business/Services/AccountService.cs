@@ -104,7 +104,7 @@ namespace AppStoreService.Business.Services
 
             if (user != null && user.IsConfirm)
             {
-                user.ResetPasswordCode = Guid.NewGuid();
+                user.ResetPasswordCode = Guid.NewGuid().ToString();
                 await _userUpdater.UpdateAsync(user);
 
                 string url = $"{_config.ForgotPasswordUrl}/?code={user.ResetPasswordCode}";

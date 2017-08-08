@@ -41,7 +41,7 @@ namespace AppStoreService.Dal.Finders
             return Query.Filter.Eq(u => u.Id, id);
         }
 
-        private FilterDefinition<User> ByCodeConfirm(Guid code)
+        private FilterDefinition<User> ByCodeConfirm(string code)
         {
             return Query.Filter.Eq(u => u.ConfirmCode, code);
         }
@@ -51,7 +51,7 @@ namespace AppStoreService.Dal.Finders
             if (!string.IsNullOrEmpty(model.UserId) && ObjectId.TryParse(model.UserId, out ObjectId id) &&
                 !string.IsNullOrEmpty(model.Code) && Guid.TryParse(model.Code, out Guid code))
             {
-                return Query.Filter.And(ById(id), ByCodeConfirm(code));
+                return Query.Filter.And(ById(id), ByCodeConfirm(code.ToString()));
             }
 
             return null;

@@ -1,0 +1,15 @@
+D:\Microsoft VS Code\Work\app-store-service\AppStoreService\bin\Debug\netcoreapp1.0\AppStoreService.deps.json
+D:\Microsoft VS Code\Work\app-store-service\AppStoreService\bin\Debug\netcoreapp1.0\AppStoreService.runtimeconfig.json
+D:\Microsoft VS Code\Work\app-store-service\AppStoreService\bin\Debug\netcoreapp1.0\AppStoreService.runtimeconfig.dev.json
+D:\Microsoft VS Code\Work\app-store-service\AppStoreService\obj\Debug\netcoreapp1.0\AppStoreService.csprojResolveAssemblyReference.cache
+D:\Microsoft VS Code\Work\app-store-service\AppStoreService\obj\Debug\netcoreapp1.0\AppStoreService.AssemblyInfo.cs
+D:\Microsoft VS Code\Work\app-store-service\AppStoreService\bin\Debug\netcoreapp1.0\AppStoreService.dll
+D:\Microsoft VS Code\Work\app-store-service\AppStoreService\bin\Debug\netcoreapp1.0\AppStoreService.pdb
+D:\Microsoft VS Code\Work\app-store-service\AppStoreService\bin\Debug\netcoreapp1.0\AppStoreService.Business.dll
+D:\Microsoft VS Code\Work\app-store-service\AppStoreService\bin\Debug\netcoreapp1.0\AppStoreService.Core.dll
+D:\Microsoft VS Code\Work\app-store-service\AppStoreService\bin\Debug\netcoreapp1.0\AppStoreService.Dal.dll
+D:\Microsoft VS Code\Work\app-store-service\AppStoreService\bin\Debug\netcoreapp1.0\AppStoreService.Business.pdb
+D:\Microsoft VS Code\Work\app-store-service\AppStoreService\bin\Debug\netcoreapp1.0\AppStoreService.Core.pdb
+D:\Microsoft VS Code\Work\app-store-service\AppStoreService\bin\Debug\netcoreapp1.0\AppStoreService.Dal.pdb
+D:\Microsoft VS Code\Work\app-store-service\AppStoreService\obj\Debug\netcoreapp1.0\AppStoreService.dll
+D:\Microsoft VS Code\Work\app-store-service\AppStoreService\obj\Debug\netcoreapp1.0\AppStoreService.pdb
