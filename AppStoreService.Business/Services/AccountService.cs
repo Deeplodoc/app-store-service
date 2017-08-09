@@ -4,6 +4,7 @@ using AppStoreService.Core.Entities;
 using AppStoreService.Core.FindersModels;
 using System.Threading.Tasks;
 using System;
+using AppStoreService.Core.Business.Models;
 
 namespace AppStoreService.Business.Services
 {
@@ -136,12 +137,12 @@ namespace AppStoreService.Business.Services
             });
         }
 
-        public User GetUser(string login, string password)
+        public User GetUser(LoginModel model)
         {
             return _userLoginFilter.Filter(new UserLoginFindModel
             {
-                Login = login,
-                Password = password
+                Login = model.Login,
+                Password = model.Password
             });
         }
 

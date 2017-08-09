@@ -1,5 +1,6 @@
 ﻿using AppStoreService.Core;
 using AppStoreService.Core.Business;
+using AppStoreService.Core.Business.Models;
 using AppStoreService.Core.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
@@ -29,11 +30,11 @@ namespace AppStoreService.Controllers
             _accountService = accountService;
         }
 
-        [HttpGet("login")]
+        [HttpPost("login")]
         [AllowAnonymous]
-        public async Task Login(string login, string password)
+        public async Task Login([FromBody]LoginModel model)
         {
-            var identity = GetIdentity(login, login);
+            var identity = GetIdentity(model);
             if (identity == null)
             {
                 Response.StatusCode = 400;
@@ -138,9 +139,9 @@ namespace AppStoreService.Controllers
             return await _accountService.GetForgotUser(code);
         }
 
-        private ClaimsIdentity GetIdentity(string username, string password)
+        private ClaimsIdentity GetIdentity(LoginModel model)
         {
-            User user = _accountService.GetUser(username, password);
+            User user = _accountService.GetUser(model);
             if (user != null)
             {
                 var claims = new List<Claim>

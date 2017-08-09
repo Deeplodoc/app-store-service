@@ -22,8 +22,8 @@ namespace AppStoreService.Dal.Creators
         public async Task<User> CreateAsync(User item)
         {
             item.Id = ObjectId.GenerateNewId();
-            await Collection.InsertOneAsync(item);
             item.ConfirmCode = Guid.NewGuid().ToString();
+            await Collection.InsertOneAsync(item);
             return item;
         }
     }
