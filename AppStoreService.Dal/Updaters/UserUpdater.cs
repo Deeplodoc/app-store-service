@@ -32,7 +32,10 @@ namespace AppStoreService.Dal.Updaters
                 .Set(u => u.FirstName, item.FirstName)
                 .Set(u => u.IsConfirm, item.IsConfirm)
                 .Set(u => u.LastName, item.LastName)
-                .Set(u => u.Phone, item.Phone);
+                .Set(u => u.Phone, item.Phone)
+                .Set(u => u.ConfirmCode, item.ConfirmCode)
+                .Set(u => u.ResetPasswordCode, item.ResetPasswordCode)
+                .Set(u => u.Password, item.Password);
         }
 
         private FindOneAndUpdateOptions<User> IsUpsert(bool upsert)

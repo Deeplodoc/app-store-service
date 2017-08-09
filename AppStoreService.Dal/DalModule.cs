@@ -42,6 +42,7 @@ namespace AppStoreService.Dal
             builder.RegisterType<UserConfirmFinder>().As<IFilter<UserConfirmModel, User>>();
             builder.RegisterType<UserMailFinder>().As<IFilter<UserMailModel, User>>();
             builder.RegisterType<UserResetCodeFinder>().As<IFilter<UserResetCodeModel, User>>();
+            builder.RegisterType<UserByIdFinder>().As<IFilter<UserByIdModel, User>>();
         }
     }
 }

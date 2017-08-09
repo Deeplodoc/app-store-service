@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace AppStoreService.Core.Entities
+﻿namespace AppStoreService.Core.Entities
 {
     public class User
     {

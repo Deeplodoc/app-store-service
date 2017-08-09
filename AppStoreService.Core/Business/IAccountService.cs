@@ -7,12 +7,13 @@ namespace AppStoreService.Core.Business
     public interface IAccountService
     {
         User GetUser(LoginModel model);
-        Task<bool> ConfirmAccount(string userId, string code);
+        Task<User> ConfirmAccount(string userId, string code);
         Task<User> CreateUserAsync(User item);
         Task SendMailAsync(Email item);
         Task<bool> ChangePassword(string email, string password);
         Task<bool> ForgotPassword(string mail);
         Task UpdateUser(User item);
         Task<User> GetForgotUser(string code);
+        Task<User> GetUserByIdAsync(string userId);
     }
 }

@@ -16,6 +16,7 @@ namespace AppStoreService.Business.Services
         private readonly IFilter<UserConfirmModel, User> _userConfirmFilter;
         private readonly IFilter<UserMailModel, User> _userMailFinder;
         private readonly IFilter<UserResetCodeModel, User> _userResetCodeFinder;
+        private readonly IFilter<UserByIdModel, User> _userByIdFinder;
         private readonly IEmailSendService _emailService;
         private readonly Configuration _config;
 
@@ -25,6 +26,7 @@ namespace AppStoreService.Business.Services
             IUpdate<User> userUpdater,
             IFilter<UserMailModel, User> userMailFinder,
             IFilter<UserResetCodeModel, User> userResetCodeFinder,
+            IFilter<UserByIdModel, User> userByIdFinder,
             Configuration config)
         {
             _userCreator = userCreator;
@@ -34,6 +36,7 @@ namespace AppStoreService.Business.Services
             _userConfirmFilter = userConfirmFilter;
             _userMailFinder = userMailFinder;
             _userResetCodeFinder = userResetCodeFinder;
+            _userByIdFinder = userByIdFinder;
             _config = config;
         }
 
@@ -59,10 +62,8 @@ namespace AppStoreService.Business.Services
             });
         }
 
-        public async Task<bool> ConfirmAccount(string userId, string code)
+        public async Task<User> ConfirmAccount(string userId, string code)
         {
-            bool isConfirm = false;
-
             User user = await _userConfirmFilter.FilterAsync(new UserConfirmModel
             {
                 UserId = userId,
@@ -72,14 +73,12 @@ namespace AppStoreService.Business.Services
             if (user != null)
             {
                 user.IsConfirm = true;
+                user.ConfirmCode = string.Empty;
                 await _userUpdater.UpdateAsync(user);
-                isConfirm = true;
+                return user;
             }
 
-            return await Task.Run(() =>
-            {
-                return isConfirm;
-            });
+            return null;
         }
 
         public async Task<User> CreateUserAsync(User item)
@@ -143,6 +142,14 @@ namespace AppStoreService.Business.Services
             {
                 Login = model.Login,
                 Password = model.Password
+            });
+        }
+
+        public Task<User> GetUserByIdAsync(string userId)
+        {
+            return _userByIdFinder.FilterAsync(new UserByIdModel
+            {
+                UserId = userId
             });
         }
 

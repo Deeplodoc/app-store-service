@@ -2,6 +2,7 @@
 using AppStoreService.Core.Business;
 using AppStoreService.Core.Business.Models;
 using AppStoreService.Core.Entities;
+using AppStoreService.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
@@ -34,7 +35,7 @@ namespace AppStoreService.Controllers
         [AllowAnonymous]
         public async Task Login([FromBody]LoginModel model)
         {
-            var identity = GetIdentity(model);
+            ClaimsIdentity identity = GetIdentity(model);
             if (identity == null)
             {
                 Response.StatusCode = 400;
@@ -92,11 +93,20 @@ namespace AppStoreService.Controllers
         [HttpGet("confirm")]
         public async Task Confirm(string userId, string code)
         {
-            bool result = await _accountService.ConfirmAccount(userId, code);
-            if (!result)
+            User user = await _accountService.ConfirmAccount(userId, code);
+            if (user != null)
+            {
+                await Login(new LoginModel
+                {
+                    Login = user.Login,
+                    Password = user.Password
+                });
+            }
+
+            else
             {
                 Response.StatusCode = 400;
-                await Response.WriteAsync("Не удалось подтвердить почту.");
+                await Response.WriteAsync("Не удалось подтвердить почту, либо почта уже подтверждена.");
             }
         }
 
@@ -137,6 +147,13 @@ namespace AppStoreService.Controllers
         public async Task<User> GetUserByForgotCode(string code)
         {
             return await _accountService.GetForgotUser(code);
+        }
+
+        [Authorize]
+        [HttpGet("getUserById")]
+        public async Task<User> GetUserById(string userId)
+        {
+            return await _accountService.GetUserByIdAsync(userId);
         }
 
         private ClaimsIdentity GetIdentity(LoginModel model)
