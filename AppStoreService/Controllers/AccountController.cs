@@ -2,7 +2,6 @@
 using AppStoreService.Core.Business;
 using AppStoreService.Core.Business.Models;
 using AppStoreService.Core.Entities;
-using AppStoreService.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
@@ -35,7 +34,7 @@ namespace AppStoreService.Controllers
         [AllowAnonymous]
         public async Task Login([FromBody]LoginModel model)
         {
-            ClaimsIdentity identity = GetIdentity(model);
+            ClaimsIdentity identity = GetIdentity(model, out User user);
             if (identity == null)
             {
                 Response.StatusCode = 400;
@@ -55,7 +54,8 @@ namespace AppStoreService.Controllers
             var response = new
             {
                 access_token = encodedJwt,
-                username = identity.Name
+                username = identity.Name,
+                userId = user.Id.ToString()
             };
 
             Response.ContentType = "application/json";
@@ -66,24 +66,9 @@ namespace AppStoreService.Controllers
         [AllowAnonymous]
         public async Task Register([FromBody]User model)
         {
-            User user = await _accountService.CreateUserAsync(model);
+            bool result = await _accountService.Registration(model);
 
-            if (user != null)
-            {
-                string url = $"{_config.EmailConfirmUrl}/?userId={user.Id}&code={user.ConfirmCode}";
-                string body = $"Подтвердите регистрацию, перейдя по ссылке: <a href='{url}'>link</a>";
-                Email email = new Email
-                {
-                    AddressFrom = _config.EmailFrom,
-                    AddressTo = model.Email,
-                    Title = "Подтверждение почты.",
-                    Subject = "",
-                    Body = body
-                };
-                await _accountService.SendMailAsync(email);
-            }
-
-            else
+            if (!result)
             {
                 Response.StatusCode = 400;
                 await Response.WriteAsync("Пользоатель с таким логином или почтой уже существует.");
@@ -110,6 +95,18 @@ namespace AppStoreService.Controllers
             }
         }
 
+        [HttpGet("sendConfirm")]
+        public async Task SendConfirm(string userId)
+        {
+            bool result = await _accountService.SendMailConfirm(userId);
+
+            if (!result)
+            {
+                Response.StatusCode = 400;
+                await Response.WriteAsync("Пользователь не найден.");
+            }
+        }
+
         [AllowAnonymous]
         [HttpGet("forgotPassword")]
         public async Task ForgotPassword(string email)
@@ -125,9 +122,9 @@ namespace AppStoreService.Controllers
 
         [AllowAnonymous]
         [HttpGet("resetPassword")]
-        public async Task ResetPassword(string email, string newPassword)
+        public async Task ResetPassword(string email, string code, string newPassword)
         {
-            bool result = await _accountService.ChangePassword(email, newPassword);
+            bool result = await _accountService.ChangePassword(email, code, newPassword);
             if (!result)
             {
                 Response.StatusCode = 400;
@@ -156,9 +153,9 @@ namespace AppStoreService.Controllers
             return await _accountService.GetUserByIdAsync(userId);
         }
 
-        private ClaimsIdentity GetIdentity(LoginModel model)
+        private ClaimsIdentity GetIdentity(LoginModel model, out User user)
         {
-            User user = _accountService.GetUser(model);
+            user = _accountService.GetUser(model);
             if (user != null)
             {
                 var claims = new List<Claim>

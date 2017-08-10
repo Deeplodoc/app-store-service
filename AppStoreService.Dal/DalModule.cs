@@ -43,6 +43,7 @@ namespace AppStoreService.Dal
             builder.RegisterType<UserMailFinder>().As<IFilter<UserMailModel, User>>();
             builder.RegisterType<UserResetCodeFinder>().As<IFilter<UserResetCodeModel, User>>();
             builder.RegisterType<UserByIdFinder>().As<IFilter<UserByIdModel, User>>();
+            builder.RegisterType<UserMailCodeFinder>().As<IFilter<UserResetPassModel, User>>();
         }
     }
 }

@@ -17,6 +17,7 @@ namespace AppStoreService.Business.Services
         private readonly IFilter<UserMailModel, User> _userMailFinder;
         private readonly IFilter<UserResetCodeModel, User> _userResetCodeFinder;
         private readonly IFilter<UserByIdModel, User> _userByIdFinder;
+        private readonly IFilter<UserResetPassModel, User> _userResetFinder;
         private readonly IEmailSendService _emailService;
         private readonly Configuration _config;
 
@@ -27,6 +28,7 @@ namespace AppStoreService.Business.Services
             IFilter<UserMailModel, User> userMailFinder,
             IFilter<UserResetCodeModel, User> userResetCodeFinder,
             IFilter<UserByIdModel, User> userByIdFinder,
+            IFilter<UserResetPassModel, User> userResetFinder,
             Configuration config)
         {
             _userCreator = userCreator;
@@ -37,29 +39,37 @@ namespace AppStoreService.Business.Services
             _userMailFinder = userMailFinder;
             _userResetCodeFinder = userResetCodeFinder;
             _userByIdFinder = userByIdFinder;
+            _userResetFinder = userResetFinder;
             _config = config;
         }
 
-        public async Task<bool> ChangePassword(string email, string password)
+        public async Task<bool> ChangePassword(string email, string code, string password)
         {
-            bool isChange = false;
-
-            User user = await _userMailFinder.FilterAsync(new UserMailModel
+            User user = await _userResetFinder.FilterAsync(new UserResetPassModel
             {
-                Email = email
+                Email = email,
+                Code = code
             });
 
             if (user != null && user.IsConfirm)
             {
                 user.Password = password;
+                user.ResetPasswordCode = string.Empty;
                 await _userUpdater.UpdateAsync(user);
-                isChange = true;
+
+                return await Task.Run(() =>
+                {
+                    return true;
+                });
             }
 
-            return await Task.Run(() =>
+            else
             {
-                return isChange;
-            });
+                return await Task.Run(() =>
+                {
+                    return false;
+                });
+            }
         }
 
         public async Task<User> ConfirmAccount(string userId, string code)
@@ -96,7 +106,6 @@ namespace AppStoreService.Business.Services
 
         public async Task<bool> ForgotPassword(string email)
         {
-            bool isForgot = false;
             User user = await _userMailFinder.FilterAsync(new UserMailModel
             {
                 Email = email
@@ -107,8 +116,8 @@ namespace AppStoreService.Business.Services
                 user.ResetPasswordCode = Guid.NewGuid().ToString();
                 await _userUpdater.UpdateAsync(user);
 
-                string url = $"{_config.ForgotPasswordUrl}/?code={user.ResetPasswordCode}";
-                string body = $"Чтобы сбросить пароль, перейдите по ссылке по ссылке: <a href='{url}'>link</a>";
+                string url = $"{_config.ForgotPasswordUrl}?email={user.Email}&code={user.ResetPasswordCode}";
+                string body = $"Чтобы сбросить пароль, перейдите по ссылке по ссылке: <a href='{url}'>Сбросить пароль.</a>";
                 Email mail = new Email
                 {
                     AddressFrom = _config.EmailFrom,
@@ -119,13 +128,19 @@ namespace AppStoreService.Business.Services
                 };
                 await SendMailAsync(mail);
 
-                isForgot = true;
+                return await Task.Run(() =>
+                {
+                    return true;
+                });
             }
 
-            return await Task.Run(() =>
+            else
             {
-                return isForgot;
-            });
+                return await Task.Run(() =>
+                {
+                    return false;
+                });
+            }
         }
 
         public async Task<User> GetForgotUser(string code)
@@ -153,14 +168,80 @@ namespace AppStoreService.Business.Services
             });
         }
 
-        public async Task SendMailAsync(Email item)
+        public async Task<bool> Registration(User item)
         {
-            await _emailService.SendAsync(item);
+            User user = await _userCreator.CreateAsync(item);
+
+            if (user != null)
+            {
+                await SenMailConfirm(user);
+
+                return await Task.Run(() =>
+                {
+                    return true;
+                });
+            }
+
+            else
+            {
+                return await Task.Run(() =>
+                {
+                    return false;
+                });
+            }
+        }
+
+        public async Task<bool> SendMailConfirm(string userId)
+        {
+            User user = await _userByIdFinder.FilterAsync(new UserByIdModel
+            {
+                UserId = userId
+            });
+
+            if (user != null)
+            {
+                user.ConfirmCode = Guid.NewGuid().ToString();
+                await _userUpdater.UpdateAsync(user);
+                await SenMailConfirm(user);
+
+                return await Task.Run(() =>
+                {
+                    return true;
+                });
+            }
+
+            else
+            {
+                return await Task.Run(() =>
+                {
+                    return false;
+                });
+            }
         }
 
         public async Task UpdateUser(User item)
         {
             await _userUpdater.UpdateAsync(item);
+        }
+
+        private async Task SenMailConfirm(User user)
+        {
+            string url = $"{_config.EmailConfirmUrl}/?userId={user.Id}&code={user.ConfirmCode}";
+            string body = $"Подтвердите регистрацию, перейдя по ссылке: <a href='{url}'>link</a>";
+            Email email = new Email
+            {
+                AddressFrom = _config.EmailFrom,
+                AddressTo = user.Email,
+                Title = "Подтверждение почты.",
+                Subject = "",
+                Body = body
+            };
+            await _emailService.SendAsync(email);
+        }
+
+        private async Task SendMailAsync(Email item)
+        {
+            await _emailService.SendAsync(item);
         }
     }
 }
