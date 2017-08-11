@@ -227,7 +227,7 @@ namespace AppStoreService.Business.Services
         private async Task SenMailConfirm(User user)
         {
             string url = $"{_config.EmailConfirmUrl}/?userId={user.Id}&code={user.ConfirmCode}";
-            string body = $"Подтвердите регистрацию, перейдя по ссылке: <a href='{url}'>link</a>";
+            string body = $"Подтвердите регистрацию, перейдя по ссылке: <a href='{url}'>Подтвердить аккаунт.</a>";
             Email email = new Email
             {
                 AddressFrom = _config.EmailFrom,
