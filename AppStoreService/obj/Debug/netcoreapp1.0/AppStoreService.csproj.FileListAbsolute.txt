@@ -13,3 +13,4 @@ D:\Microsoft VS Code\Work\app-store-service\AppStoreService\bin\Debug\netcoreapp
 D:\Microsoft VS Code\Work\app-store-service\AppStoreService\bin\Debug\netcoreapp1.0\AppStoreService.Dal.pdb
 D:\Microsoft VS Code\Work\app-store-service\AppStoreService\obj\Debug\netcoreapp1.0\AppStoreService.dll
 D:\Microsoft VS Code\Work\app-store-service\AppStoreService\obj\Debug\netcoreapp1.0\AppStoreService.pdb
+D:\Microsoft VS Code\work\app-store-service\AppStoreService\obj\Debug\netcoreapp1.0\AppStoreService.csproj.CoreCompileInputs.cache

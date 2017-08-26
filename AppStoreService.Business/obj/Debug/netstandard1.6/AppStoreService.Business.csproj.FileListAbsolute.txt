@@ -9,3 +9,4 @@ D:\Microsoft VS Code\Work\app-store-service\AppStoreService.Business\obj\Debug\n
 D:\Microsoft VS Code\Work\app-store-service\AppStoreService.Business\obj\Debug\netstandard1.6\AppStoreService.Business.AssemblyInfo.cs
 D:\Microsoft VS Code\Work\app-store-service\AppStoreService.Business\obj\Debug\netstandard1.6\AppStoreService.Business.dll
 D:\Microsoft VS Code\Work\app-store-service\AppStoreService.Business\obj\Debug\netstandard1.6\AppStoreService.Business.pdb
+D:\Microsoft VS Code\work\app-store-service\AppStoreService.Business\obj\Debug\netstandard1.6\AppStoreService.Business.csproj.CoreCompileInputs.cache

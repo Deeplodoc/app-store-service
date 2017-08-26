@@ -2,6 +2,7 @@
 using AppStoreService.Core.Entities;
 using MailKit.Net.Smtp;
 using MimeKit;
+using System;
 using System.Threading.Tasks;
 
 namespace AppStoreService.Dal.Senders
@@ -21,7 +22,7 @@ namespace AppStoreService.Dal.Senders
 
             using (var client = new SmtpClient())
             {
-                await client.ConnectAsync("smtp.yandex.ru", 25, false);
+                await client.ConnectAsync("smtp.yandex.ru", 465, true);
                 await client.AuthenticateAsync("store.onlinestore@yandex.ru", "Cypresshill2016");
                 await client.SendAsync(emailMessage);
                 await client.DisconnectAsync(true);
