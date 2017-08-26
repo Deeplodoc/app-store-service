@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "targets": {
     ".NETCoreApp,Version=v1.0": {
       "Autofac/4.6.1": {
@@ -3951,6 +3951,12 @@
           "AppStoreService.Dal": "1.0.0",
           "Autofac": "4.6.1",
           "NETStandard.Library": "1.6.1"
+        },
+        "compile": {
+          "bin/placeholder/AppStoreService.Business.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/AppStoreService.Business.dll": {}
         }
       },
       "AppStoreService.Core/1.0.0": {
@@ -3959,6 +3965,12 @@
         "dependencies": {
           "Autofac": "4.6.1",
           "NETStandard.Library": "1.6.1"
+        },
+        "compile": {
+          "bin/placeholder/AppStoreService.Core.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/AppStoreService.Core.dll": {}
         }
       },
       "AppStoreService.Dal/1.0.0": {
@@ -3970,6 +3982,12 @@
           "MailKit": "1.16.2",
           "MongoDB.Driver": "2.4.4",
           "NETStandard.Library": "1.6.1"
+        },
+        "compile": {
+          "bin/placeholder/AppStoreService.Dal.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/AppStoreService.Dal.dll": {}
         }
       }
     }
@@ -10543,27 +10561,39 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\User\\.nuget\\packages\\": {}
+    "C:\\Users\\Golem\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
+    "restoreSettings": {
+      "hideWarningsAndErrors": true
+    },
     "restore": {
-      "projectUniqueName": "D:\\Microsoft VS Code\\Work\\app-store-service\\AppStoreService\\AppStoreService.csproj",
+      "projectUniqueName": "D:\\Microsoft VS Code\\work\\app-store-service\\AppStoreService\\AppStoreService.csproj",
       "projectName": "AppStoreService",
-      "projectPath": "D:\\Microsoft VS Code\\Work\\app-store-service\\AppStoreService\\AppStoreService.csproj",
-      "outputPath": "D:\\Microsoft VS Code\\Work\\app-store-service\\AppStoreService\\obj\\",
+      "projectPath": "D:\\Microsoft VS Code\\work\\app-store-service\\AppStoreService\\AppStoreService.csproj",
+      "packagesPath": "C:\\Users\\Golem\\.nuget\\packages\\",
+      "outputPath": "D:\\Microsoft VS Code\\work\\app-store-service\\AppStoreService\\obj\\",
       "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "C:\\Users\\Golem\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+      ],
       "originalTargetFrameworks": [
         "netcoreapp1.0"
       ],
+      "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "https://api.nuget.org/v3/index.json": {}
+      },
       "frameworks": {
         "netcoreapp1.0": {
           "projectReferences": {
-            "D:\\Microsoft VS Code\\Work\\app-store-service\\AppStoreService.Core\\AppStoreService.Core.csproj": {
-              "projectPath": "D:\\Microsoft VS Code\\Work\\app-store-service\\AppStoreService.Core\\AppStoreService.Core.csproj"
+            "D:\\Microsoft VS Code\\work\\app-store-service\\AppStoreService.Core\\AppStoreService.Core.csproj": {
+              "projectPath": "D:\\Microsoft VS Code\\work\\app-store-service\\AppStoreService.Core\\AppStoreService.Core.csproj"
             },
-            "D:\\Microsoft VS Code\\Work\\app-store-service\\AppStoreService.Business\\AppStoreService.Business.csproj": {
-              "projectPath": "D:\\Microsoft VS Code\\Work\\app-store-service\\AppStoreService.Business\\AppStoreService.Business.csproj"
+            "D:\\Microsoft VS Code\\work\\app-store-service\\AppStoreService.Business\\AppStoreService.Business.csproj": {
+              "projectPath": "D:\\Microsoft VS Code\\work\\app-store-service\\AppStoreService.Business\\AppStoreService.Business.csproj"
             }
           }
         }

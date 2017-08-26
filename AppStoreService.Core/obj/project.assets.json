@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "targets": {
     ".NETStandard,Version=v1.6": {
       "Autofac/4.6.1": {
@@ -4424,19 +4424,31 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\User\\.nuget\\packages\\": {}
+    "C:\\Users\\Golem\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
+    "restoreSettings": {
+      "hideWarningsAndErrors": true
+    },
     "restore": {
-      "projectUniqueName": "D:\\Microsoft VS Code\\Work\\app-store-service\\AppStoreService.Core\\AppStoreService.Core.csproj",
+      "projectUniqueName": "D:\\Microsoft VS Code\\work\\app-store-service\\AppStoreService.Core\\AppStoreService.Core.csproj",
       "projectName": "AppStoreService.Core",
-      "projectPath": "D:\\Microsoft VS Code\\Work\\app-store-service\\AppStoreService.Core\\AppStoreService.Core.csproj",
-      "outputPath": "D:\\Microsoft VS Code\\Work\\app-store-service\\AppStoreService.Core\\obj\\",
+      "projectPath": "D:\\Microsoft VS Code\\work\\app-store-service\\AppStoreService.Core\\AppStoreService.Core.csproj",
+      "packagesPath": "C:\\Users\\Golem\\.nuget\\packages\\",
+      "outputPath": "D:\\Microsoft VS Code\\work\\app-store-service\\AppStoreService.Core\\obj\\",
       "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "C:\\Users\\Golem\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+      ],
       "originalTargetFrameworks": [
         "netstandard1.6"
       ],
+      "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "https://api.nuget.org/v3/index.json": {}
+      },
       "frameworks": {
         "netstandard1.6": {
           "projectReferences": {}
